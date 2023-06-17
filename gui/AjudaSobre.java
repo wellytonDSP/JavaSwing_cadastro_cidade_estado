@@ -39,7 +39,7 @@ public class AjudaSobre extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Sobre"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null));
 
         jLabel1.setText("Equipe");
 
@@ -51,7 +51,7 @@ public class AjudaSobre extends javax.swing.JDialog {
 
         jLabel5.setText("Software desenvolvido por mim");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(null));
 
         jButton1.setText("Sair");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
