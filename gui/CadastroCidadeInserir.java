@@ -6,7 +6,7 @@ package br.pr.senaccadastros.gui;
 
 /**
  *
- * @author welly
+ * @author wellyton
  */
 public class CadastroCidadeInserir extends javax.swing.JDialog {
 
@@ -38,8 +38,6 @@ public class CadastroCidadeInserir extends javax.swing.JDialog {
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Inserir Cidade"));
 
         jButtonLimparEstado.setText("Limpar");
 
@@ -74,7 +72,7 @@ public class CadastroCidadeInserir extends javax.swing.JDialog {
                             .addComponent(jTextFieldNomeEstado)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(112, Short.MAX_VALUE)
+                        .addContainerGap(122, Short.MAX_VALUE)
                         .addComponent(jButtonSalvarEstado)
                         .addGap(12, 12, 12)
                         .addComponent(jButtonLimparEstado)
@@ -93,7 +91,7 @@ public class CadastroCidadeInserir extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimparEstado)
                     .addComponent(jButtonSalvarEstado)

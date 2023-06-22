@@ -94,6 +94,11 @@ public class CadastroCidadePesquisar extends javax.swing.JDialog {
         });
 
         jButtonAlterarCidade.setText("Alterar");
+        jButtonAlterarCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAlterarCidadeActionPerformed(evt);
+            }
+        });
 
         jButtonExcluirCidade.setText("Excluir");
 
@@ -168,6 +173,10 @@ public class CadastroCidadePesquisar extends javax.swing.JDialog {
         dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonFecharCidadeActionPerformed
+
+    private void jButtonAlterarCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAlterarCidadeActionPerformed
 
     /**
      * @param args the command line arguments

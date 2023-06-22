@@ -4,6 +4,9 @@
  */
 package br.pr.senaccadastros.gui;
 
+import br.pr.senaccadastros.dao.EstadoDAO;
+import br.pr.senaccadastros.model.Estado;
+
 /**
  *
  * @author welly
@@ -136,6 +139,15 @@ public class CadastroEstadoInserir extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFecharEstadoActionPerformed
 
     private void jButtonSalvarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarEstadoActionPerformed
+        Estado estado = new Estado();
+        
+        EstadoDAO estadoDAO = new EstadoDAO();
+        
+        estado.setNomeEstado(jTextFieldNomeEstado.getText());
+        estado.setSiglaEstado(jTextFieldNomeEstado.getText());
+        
+        estadoDAO.salvarOuAtualizar(estado);
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalvarEstadoActionPerformed
 
