@@ -33,14 +33,14 @@ public class Cidade {
     /**
      * @return the nome
      */
-    public String getNome() {
+    public String getNomeCidade() {
         return nomeCidade;
     }
 
     /**
      * @param nome the nome to set
      */
-    public void setNome(String nome) {
+    public void setNomeCidade(String nome) {
         this.nomeCidade = nome;
     }
 

@@ -6,6 +6,9 @@ package br.pr.senaccadastros.gui;
 
 import br.pr.senaccadastros.dao.EstadoDAO;
 import br.pr.senaccadastros.model.Estado;
+import br.pr.senaccadastros.utils.Constantes;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -135,28 +138,48 @@ public class CadastroEstadoInserir extends javax.swing.JDialog {
 
     private void jButtonFecharEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharEstadoActionPerformed
         dispose();
+        
+
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonFecharEstadoActionPerformed
 
     private void jButtonSalvarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarEstadoActionPerformed
-        Estado estado = new Estado();
-        
-        EstadoDAO estadoDAO = new EstadoDAO();
-        
-        estado.setNomeEstado(jTextFieldNomeEstado.getText());
-        estado.setSiglaEstado(jTextFieldNomeEstado.getText());
-        
-        estadoDAO.salvarOuAtualizar(estado);
+     
+        try{
+            Estado estado = new Estado();
+            EstadoDAO estadoDAO = new EstadoDAO();
+            
+            if (jTextFieldNomeEstado.getText()== null || "".equals(jButtonLimparEstado.getText()) || (jTextFieldSiglaEstado.getText()== null) || "".equals(jTextFieldSiglaEstado.getText())){
+                JOptionPane.showMessageDialog(this, Constantes.MSG_ERRO_STRING, this.getTitle(),JOptionPane.INFORMATION_MESSAGE);
+                jTextFieldNomeEstado.requestFocus();
+                reset();
+            }else{
+                estado.setNomeEstado(jTextFieldNomeEstado.getText());
+                estado.setSiglaEstado(jTextFieldSiglaEstado.getText());
+                estadoDAO.salvarOuAtualizar(estado);
+                JOptionPane.showMessageDialog(this, Constantes.MSG_REGISTRO_SALVO_SUCESSO,this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                reset();
+            }
+        }catch(Exception e){
+           JOptionPane.showMessageDialog(this, Constantes.MSG_ERRO_SALVAR_REGISTRO + e.getMessage(), this.getTitle(), JOptionPane.ERROR_MESSAGE);
+        }
+       
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalvarEstadoActionPerformed
 
     private void jButtonLimparEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparEstadoActionPerformed
-        jTextFieldNomeEstado.setText("");
-        jTextFieldSiglaEstado.setText("");
+        
+        reset();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLimparEstadoActionPerformed
-
+    
+    public void reset(){
+        jTextFieldNomeEstado.setText(null);
+        jTextFieldSiglaEstado.setText(null);
+    }
+    
     /**
      * @param args the command line arguments
      */
