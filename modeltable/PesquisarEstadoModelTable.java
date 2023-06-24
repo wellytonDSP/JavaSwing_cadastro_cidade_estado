@@ -96,4 +96,8 @@ public class PesquisarEstadoModelTable extends AbstractTableModel {
             linhas.add(linha);
         }
     }
+
+    public void fireTableChanged() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -4,7 +4,16 @@
  */
 package br.pr.senaccadastros.gui;
 
+import br.pr.senaccadastros.dao.EstadoDAO;
 import br.pr.senaccadastros.model.Estado;
+import br.pr.senaccadastros.modeltable.PesquisarEstadoModelTable;
+import br.pr.senaccadastros.utils.CellRenderer;
+import br.pr.senaccadastros.utils.Constantes;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -13,6 +22,8 @@ import br.pr.senaccadastros.model.Estado;
 public class CadastroEstadoPesquisar extends javax.swing.JDialog {
     
     private Estado estadoSelecionado;
+    private List<Estado> lista;
+    private String pesquisa;
     
     /**
      * Creates new form CadastroEstadoPesquisar
@@ -21,6 +32,14 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setVisible(true);
+    
+        jButtonAlterarEstado.setEnabled(false);
+        jButtonExcluirEstado.setEnabled(false);
+        jButtonSalvarEstado.setEnabled(false);
+        jTextFieldNomeEstado.setEnabled(false);
+        jTextFieldSiglaAlterarEstado.setEnabled(false);
+    
+    
     }
 
     /**
@@ -76,17 +95,12 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        jTableEstado.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTableEstado.setModel(new br.pr.senaccadastros.modeltable.PesquisarEstadoModelTable());
+        jTableEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableEstadoMousePressed(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(jTableEstado);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -99,6 +113,11 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
         });
 
         jButtonPesquisaEstado.setText("Pesquisar");
+        jButtonPesquisaEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisaEstadoActionPerformed(evt);
+            }
+        });
 
         jButtonFecharEstado.setText("Fechar");
         jButtonFecharEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +127,11 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
         });
 
         jButtonAlterarEstado.setText("Alterar");
+        jButtonAlterarEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAlterarEstadoActionPerformed(evt);
+            }
+        });
 
         jButtonExcluirEstado.setText("Excluir");
         jButtonExcluirEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +141,11 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
         });
 
         jButtonSalvarEstado.setText("Salvar");
+        jButtonSalvarEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarEstadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -218,6 +247,18 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFecharEstadoActionPerformed
 
     private void jButtonExcluirEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirEstadoActionPerformed
+        try{
+            EstadoDAO estadoDAO = new EstadoDAO();
+            estadoDAO.excluir(estadoSelecionado);
+            executarPesquisa("");
+            reset();
+            jButtonAlterarEstado.setEnabled(false);
+            jButtonExcluirEstado.setEnabled(false);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,Constantes.MSG_ERRO_SALVAR_REGISTRO + e.getMessage(),this.getTitle(),JOptionPane.ERROR_MESSAGE);
+        }
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonExcluirEstadoActionPerformed
 
@@ -231,6 +272,118 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLimparEstadoActionPerformed
 
+    private void jButtonPesquisaEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaEstadoActionPerformed
+        try {
+            if(jTextFieldNomeEstado.getText()== null||"".equals(jTextFieldNomeEstado.getText())){
+                
+                executarPesquisa("");
+                jButtonAlterarEstado.setEnabled(true);
+                jButtonExcluirEstado.setEnabled(true);
+                
+            }else{
+                executarPesquisa(jTextFieldNomeEstado.getText());
+                jButtonAlterarEstado.setEnabled(true);
+                jButtonExcluirEstado.setEnabled(true);
+            }
+            
+        }catch(Exception e){
+            PesquisarEstadoModelTable tableModel = (PesquisarEstadoModelTable) jTableEstado.getModel();
+            tableModel.removeAll();
+            tableModel.fireTableDataChanged();
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonPesquisaEstadoActionPerformed
+
+    private void jTableEstadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEstadoMousePressed
+        selecionarEstado();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableEstadoMousePressed
+
+    public void selecionarEstado(){
+        try{
+            int row = jTableEstado.getSelectedRow();
+            PesquisarEstadoModelTable tableModel = (PesquisarEstadoModelTable) jTableEstado.getModel();
+            estadoSelecionado = tableModel.getAt(row);
+        }catch(Exception e){
+            estadoSelecionado = null;
+        }
+    }
+    
+    private void organizarColunasTabela() {
+        TableColumn column = jTableEstado.getColumnModel().getColumn(1);
+        column.setPreferredWidth(350);
+        jTableEstado.setDefaultRenderer(Object.class, new CellRenderer());
+    }
+    
+    private void resetPesquisa() {
+        jTextFieldNomeEstado.setText(null);
+        PesquisarEstadoModelTable tableModel = (PesquisarEstadoModelTable) jTableEstado.getModel();
+        jTableEstado.setPreferredSize(new Dimension(300, 64));
+        tableModel.removeAll();
+        tableModel.fireTableDataChanged();
+    }
+    public void carregarTabela() {
+        
+        try {
+            EstadoDAO estadoDAO = new EstadoDAO();
+            List<Estado> lista = estadoDAO.buscarTodos();
+            
+            PesquisarEstadoModelTable tableModel = (PesquisarEstadoModelTable) jTableEstado.getModel();
+            if (lista.isEmpty()) {
+                jTableEstado.setPreferredSize(new Dimension(300, 64));
+                tableModel.removeAll();
+                tableModel.fireTableDataChanged();
+            } else {
+                tableModel.setGridBusca(lista);
+                jTableEstado.setPreferredSize(new Dimension(300, lista.size() * 17));
+                tableModel.fireTableDataChanged();
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    private void jButtonAlterarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarEstadoActionPerformed
+        if(estadoSelecionado != null){
+            jButtonSalvarEstado.setEnabled(true);
+            jButtonExcluirEstado.setEnabled(true);
+            jTextFieldNomeEstado.setEnabled(true);
+            jTextFieldSiglaAlterarEstado.setEnabled(true);
+            
+        
+        }
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAlterarEstadoActionPerformed
+
+    private void jButtonSalvarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalvarEstadoActionPerformed
+
+    public void executarPesquisa(String perquisa) throws Exception{
+        
+        List<Estado> Lista = new ArrayList<Estado>();
+        PesquisarEstadoModelTable tableModel = (PesquisarEstadoModelTable) jTableEstado.getModel();
+        
+        EstadoDAO estadoDAO = new EstadoDAO();
+        if(pesquisa == null || pesquisa.equals("")){
+            lista = estadoDAO.buscarTodos();
+        } else {
+            lista = estadoDAO.buscarPorNome(pesquisa);
+        }
+        
+        if(lista.isEmpty()){
+            tableModel.removeAll();
+            tableModel.fireTableChanged();
+        }else{
+            tableModel.setGridBusca(Lista);
+            jTableEstado.setPreferredSize(new Dimension(new Dimension( 300,lista.size() * 17)));
+            tableModel.fireTableDataChanged();
+        }
+        
+
+    }
     public void reset(){
         estadoSelecionado = null;
         jTextFieldNomeAlterarEstado.setText(null);
@@ -299,4 +452,6 @@ public class CadastroEstadoPesquisar extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldNomeEstado;
     private javax.swing.JTextField jTextFieldSiglaAlterarEstado;
     // End of variables declaration//GEN-END:variables
+
+
 }
